@@ -8,6 +8,12 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var connect = require('gulp-connect');
 
+/* -------------------- CONFIG ---------------------*/
+var config = {
+  port: 8001,
+  useLivereload: true,
+  jsxDebug = true
+}
 
 /* --------------------- PATHS ---------------------*/
 var paths = {
@@ -30,10 +36,14 @@ gulp.task('handle-javascript', function () {
   return browserify({
     entries: paths.source + '/js/index.jsx',
     extensions: ['.jsx'],
-    debug: true
-    })
+    debug: config.jsxDebug
+  })
   .transform(babelify)
   .bundle()
+  .on('error', function (err) { 
+    console.log('Error : ' + err.message); 
+    this.emit('end');
+  })
   .pipe(source('app.js'))
   .pipe(connect.reload())
   .pipe(gulp.dest(paths.build + '/js'));
@@ -41,39 +51,45 @@ gulp.task('handle-javascript', function () {
 
 gulp.task('compile-sass', function () {
   return gulp.src(paths.source + '/scss/**/*.scss')
-    .pipe(sass())
-    .pipe(connect.reload())
-    .pipe(gulp.dest(paths.build + '/css'));
+  .pipe(sass())
+  .on('error', function (err) { 
+    console.log('Error : ' + err.message); 
+    this.emit('end');
+  })
+  .pipe(connect.reload())
+  .pipe(gulp.dest(paths.build + '/css'));
 });
 
 gulp.task('copy-html', function () {
   return gulp.src(paths.source + '/*.html')
-    .pipe(connect.reload())
-    .pipe(gulp.dest(paths.build));
+  .pipe(connect.reload())
+  .pipe(gulp.dest(paths.build));
 });
 
 gulp.task('copy-images', function () {
   return gulp.src(paths.source + '/img/**/*')
-    .pipe(newer(paths.build + '/img'))
-    .pipe(gulp.dest(paths.build + '/img'));
+  .pipe(newer(paths.build + '/img'))
+  .pipe(gulp.dest(paths.build + '/img'));
 });
 
 gulp.task('copy-libs', function () {
   return gulp.src(paths.libs)
-    .pipe(concat('lib.js'))
-    .pipe(gulp.dest(paths.build + '/js'));
+  .pipe(concat('lib.js'))
+  .pipe(gulp.dest(paths.build + '/js'));
 });
 
 gulp.task('run-server', function () {
   connect.server({
     root: paths.build,
-    port: 8001,
-    livereload: true
+    port: config.port,
+    livereload: config.useLivereload
   });
 });
 
 gulp.task('build',
-  ['handle-javascript', 'compile-sass', 'copy-html', 'copy-images', 'copy-libs', 'run-server']);
+          ['handle-javascript', 'compile-sass',
+            'copy-html', 'copy-images', 'copy-libs', 
+            'run-server']);
 
 /* -------------------------------------------------*/
 
