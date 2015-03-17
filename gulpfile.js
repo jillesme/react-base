@@ -7,12 +7,13 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var connect = require('gulp-connect');
+var notify = require('gulp-notify');
 
 /* -------------------- CONFIG ---------------------*/
 var config = {
   port: 8001,
   useLivereload: true,
-  jsxDebug = true
+  jsxDebug: true
 }
 
 /* --------------------- PATHS ---------------------*/
@@ -40,10 +41,9 @@ gulp.task('handle-javascript', function () {
   })
   .transform(babelify)
   .bundle()
-  .on('error', function (err) { 
-    console.log('Error : ' + err.message); 
-    this.emit('end');
-  })
+  .on('error', notify.onError(function (err) {
+    return 'Error: ' + err.message;
+  }))
   .pipe(source('app.js'))
   .pipe(connect.reload())
   .pipe(gulp.dest(paths.build + '/js'));
