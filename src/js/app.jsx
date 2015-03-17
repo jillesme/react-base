@@ -1,9 +1,12 @@
-let App = React.createClass({
-  getInitialState () {
-    return {
+const React = require('react');
+
+class App extends React.createClass {
+  constructor (props) {
+    this.state = {
       message: 'Hello!'
     };
-  },
+    document.title = props.title;
+  }
   render () {
     return (
       <div>
@@ -11,6 +14,6 @@ let App = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default App;
