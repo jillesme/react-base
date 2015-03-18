@@ -8,6 +8,7 @@ var source = require('vinyl-source-stream');
 var connect = require('gulp-connect');
 var notify = require('gulp-notify');
 var watchify = require('watchify');
+var eslint = require('gulp-eslint');
 
 /* --------------------- PATHS ---------------------*/
 var paths = {
@@ -49,7 +50,14 @@ function compileJS () {
     .pipe(connect.reload())
     .pipe(gulp.dest(paths.build))
 }
-gulp.task('handle-javascript', compileJS);
+gulp.task('compile-js', compileJS);
+
+gulp.task('handle-javascript', ['compile-js'], function () {
+  return gulp.src(paths.source + '/js/**/*.jsx')
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
+});
 
 gulp.task('compile-sass', function () {
   return gulp.src(paths.source + '/scss/**/*.scss')

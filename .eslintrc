@@ -1,0 +1,54 @@
+# Taken from facebook/reactjs on GitHub
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {},
+  "ecmaFeatures": {
+    "jsx": true,
+    "classes": true,
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "modules": true
+  },
+  "rules": {
+    "space-before-blocks": 2,
+    "indent": [
+      2,
+      2,
+      {
+        "indentSwitchCase": true
+      }
+    ],
+    "brace-style": 2,
+    "space-after-keywords": 2,
+    "strict": 2,
+    "no-comma-dangle": 2,
+    "no-unused-expressions": 2,
+    "eol-last": 2,
+    "dot-notation": 2,
+    "consistent-return": 2,
+    "no-unused-vars": [
+      2,
+      {
+        "args": "none"
+      }
+    ],
+    "quotes": [
+      1,
+      "single"
+    ],
+    "max-len": [
+      1,
+      80
+    ],
+    "valid-jsdoc": 1,
+    "no-underscore-dangle": 0,
+    "new-cap": 0,
+    "no-use-before-define": 0,
+    "key-spacing": 0,
+    "no-multi-spaces": 0
+  }
+}
