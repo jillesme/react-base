@@ -1,6 +1,6 @@
 const React = require('react');
 
-class App extends React.createClass {
+class App extends React.Component {
   constructor (props) {
     this.state = {
       message: 'Hello!'
