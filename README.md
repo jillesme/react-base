@@ -6,6 +6,7 @@ react-base is a 'getting started' template for React applications. react-base us
 * JSX
 * ES6 (with Babel)
 * Browserify
+* Livereload
 * React 13.1
 
 All you need to do is clone this repo, and do `npm install`. react-base uses **Gulp** so I assume you have that installed already. If you don't install it by using:
@@ -31,3 +32,9 @@ _.map(['awesome', 'cool', 'amazing'], function (describe) {
 	return 'react-base is ' + describe + '!'; 
 });
 ```
+
+### gulp-notify
+
+One of the cool features or react-base is gulp-notify. It's a simple yet elegant way of showing you that you've got a syntax error.
+ 
+![Notification](http://i.imgur.com/71hQ4Ij.png)
